@@ -1,0 +1,44 @@
+<ul class="list-unstyled">
+  
+<% microposts.each do |micropost| %>
+
+    <li class="media mb-3">
+      <img class="mr-2 rounded" src="<%= gravatar_url(micropost.user, { size: 50 }) %>" alt="">
+      <div class="media-body">
+        <div>
+<%= link_to micropost.user.name, user_path(micropost.user) %>
+            <span class="text-muted">posted at <%= micropost.created_at %></span>
+        </div>
+        <div>
+          <p class="mb-0"><%= micropost.content %></p>
+        </div>
+        <div>
+<!--いいねボタン-->
+<% if current_user.already_favorited?(micropost)%>
+  <%= link_to favorite_path(micropost),method: :delete do %>
+    <i class="fas fa-heart"></i>
+  <% end %>
+<% else %>
+  <%= link_to micropost_favorites_path(micropost), method: :post do %>
+    <i class="far fa-heart"></i>
+  <% end %>
+<% end %>
+<%= micropost.favorites.count %>
+          
+<% if current_user == micropost.user %>
+            
+<%= link_to "Delete", micropost, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm' %>
+
+          
+<% end %>
+
+        </div>
+      </div>
+    </li>
+  
+<% end %>
+
+  
+<%= paginate microposts %>
+
+</ul>
