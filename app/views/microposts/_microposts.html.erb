@@ -13,6 +13,7 @@
           <p class="mb-0"><%= micropost.content %></p>
         </div>
         <div>
+          
 <!--いいねボタン-->
 <% if current_user.already_favorited?(micropost)%>
   <%= link_to favorite_path(micropost),method: :delete do %>
@@ -24,6 +25,7 @@
   <% end %>
 <% end %>
 <%= micropost.favorites.count %>
+          
           
 <% if current_user == micropost.user %>
             
